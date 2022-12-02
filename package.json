@@ -1,0 +1,24 @@
+{
+  "name": "news_scraping",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Alberto Camilo Rodriguez Vizcarra",
+  "license": "MIT",
+  "private": true,
+  "useWorkspaces": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "devDependencies": {
+    "@types/node": "^18.11.9",
+    "lerna": "^6.0.3"
+  },
+  "scripts": {
+    "bootstrap": "npx lerna bootstrap --hoist",
+    "clean": "npx lerna clean -y",
+    "start": "npx lerna run start"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.1263.0"
+  }
+}
