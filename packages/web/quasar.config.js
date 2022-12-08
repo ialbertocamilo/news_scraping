@@ -9,10 +9,10 @@
 // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js
 
 
-const { configure } = require('quasar/wrappers');
+const {configure} = require('quasar/wrappers');
 
 
-module.exports = configure(function (/* ctx */) {
+module.exports = configure(function (ctx) {
   return {
     eslint: {
       // fix: true,
@@ -30,7 +30,7 @@ module.exports = configure(function (/* ctx */) {
     // --> boot files are part of "main.js"
     // https://v2.quasar.dev/quasar-cli/boot-files
     boot: [
-      
+
       'axios',
     ],
 
@@ -56,7 +56,7 @@ module.exports = configure(function (/* ctx */) {
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#build
     build: {
       target: {
-        browser: [ 'es2019', 'edge88', 'firefox78', 'chrome87', 'safari13.1' ],
+        browser: ['es2019', 'edge88', 'firefox78', 'chrome87', 'safari13.1'],
         node: 'node16'
       },
 
@@ -69,7 +69,9 @@ module.exports = configure(function (/* ctx */) {
 
       // publicPath: '/',
       // analyze: true,
-      // env: {},
+      env: {
+        API: ctx.dev ? 'http://localhost:8083' : 'http://awsproduction'
+      },
       // rawDefine: {}
       // ignorePublicFolder: true,
       // minify: false,
@@ -79,7 +81,7 @@ module.exports = configure(function (/* ctx */) {
       // extendViteConf (viteConf) {},
       // viteVuePluginOptions: {},
 
-      
+
       // vitePlugins: [
       //   [ 'package-name', { ..options.. } ]
       // ]
@@ -128,7 +130,7 @@ module.exports = configure(function (/* ctx */) {
     // https://v2.quasar.dev/quasar-cli/developing-ssr/configuring-ssr
     ssr: {
       // ssrPwaHtmlFilename: 'offline.html', // do NOT use index.html as name!
-                                          // will mess up SSR
+      // will mess up SSR
 
       // extendSSRWebserverConf (esbuildConf) {},
       // extendPackageJson (json) {},

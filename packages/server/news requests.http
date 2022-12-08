@@ -1,0 +1,4 @@
+### GET request with a header
+GET http://localhost:8083/rest/news/get
+Accept: application/json
+
