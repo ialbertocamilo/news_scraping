@@ -2,3 +2,31 @@
 GET http://localhost:8083/rest/news/get
 Accept: application/json
 
+### POST agregar favoritos
+POST http://localhost:8083/rest/news/favorites/add
+Accept: application/json
+
+{
+  "item": {
+    "id": "abscscs",
+    "content": "test",
+    "img": "urlimg",
+    "link": "link url",
+    "source": "agagga",
+    "source_title": "BBC",
+    "date":"123"
+   }
+}
+
+### Send request with dynamic variables in request's body
+POST https://httpbin.org/post
+Content-Type: application/json
+
+{
+  "id": {{$uuid}},
+  "price": {{$randomInt}},
+  "ts": {{$timestamp}},
+  "value": "content"
+}
+
+###

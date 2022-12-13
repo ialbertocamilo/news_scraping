@@ -58,13 +58,13 @@ const linksList = [
     title: 'Inicio',
     caption: 'Noticias principales',
     icon: 'home',
-    link: 'https://quasar.dev'
+    link: '/'
   },
   {
     title: 'Favoritos',
     caption: 'lista de favoritos',
-    icon: 'star',
-    link: ''
+    icon: 'favorite',
+    link: '/favorites'
   },
   {
     title: 'Secciones',

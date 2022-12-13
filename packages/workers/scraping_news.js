@@ -67,8 +67,8 @@ class WebScraping {
                     content: subEl(".bajada").text(),
                     img: subEl(".fotonoticia").find("a img").attr("src"),
                     link: "https://www.elperuano.pe/" + subEl(item).find(".card-title2 a").attr("href"),
-                    source:"peruano-politiica",
-                    source_title:"El Peruano Politica"
+                    source: "peruano-politiica",
+                    source_title: "El Peruano Politica"
                 })
             }
 
@@ -93,8 +93,8 @@ class WebScraping {
                     content: $(item).find("a").text(),
                     link: $(item).find("a").attr("href"),
                     img: $(item).find("img").attr("src"),
-                    source:"republica-mundo",
-                    source_title:"La Republica Mundo"
+                    source: "republica-mundo",
+                    source_title: "La Republica Mundo"
                 })
             }
         })
@@ -104,8 +104,8 @@ class WebScraping {
                     content: $(item).find("a").text(),
                     link: $(item).find("a").attr("href"),
                     img: $(item).find("img").attr("srcset"),
-                    source:"republica-mundo",
-                    source_title:"La Republica Mundo"
+                    source: "republica-mundo",
+                    source_title: "La Republica Mundo"
                 })
             }
         })
@@ -132,8 +132,8 @@ class WebScraping {
                     content: $(item).find("a").text(),
                     link: $(item).find("a").attr("href"),
                     img: $(item).find("img").attr("src"),
-                    source:"republica-politica",
-                    source_title:"La Republica Politica"
+                    source: "republica-politica",
+                    source_title: "La Republica Politica"
                 })
             }
         })
@@ -143,8 +143,8 @@ class WebScraping {
                     content: $(item).find("a").text(),
                     link: $(item).find("a").attr("href"),
                     img: $(item).find("img").attr("srcset"),
-                    source:"republica-politica",
-                    source_title:"La Republica Politica"
+                    source: "republica-politica",
+                    source_title: "La Republica Politica"
                 })
             }
         })
@@ -169,8 +169,8 @@ class WebScraping {
                 content: $(item).find(".fs-wi__title").text(),
                 link: "https://www.elcomercio.pe" + $(item).find(".fs-wi__title a").attr("href"),
                 img: $(item).find("img").attr("src"),
-                source:"comercio-mundo",
-                source_title:"El Comercio Mundo"
+                source: "comercio-mundo",
+                source_title: "El Comercio Mundo"
             })
         })
 
@@ -194,8 +194,8 @@ class WebScraping {
                 content: $(item).find(".fs-wi__title").text(),
                 link: "https://www.elcomercio.pe" + $(item).find(".fs-wi__title a").attr("href"),
                 img: $(item).find("img").attr("src"),
-                source:"comercio-politica",
-                source_title:"El Comercio Politica"
+                source: "comercio-politica",
+                source_title: "El Comercio Politica"
             })
         })
 
@@ -218,8 +218,8 @@ class WebScraping {
                     content: $(item).find(".featured-story__title-link").text(),
                     link: "https://gestion.pe" + $(item).find(".featured-story__img-link").attr("href"),
                     img: $(item).find("a picture source").attr("data-srcset"),
-                    source:"gestion-internacional",
-                    source_title:"Gestion internacional"
+                    source: "gestion-internacional",
+                    source_title: "Gestion internacional"
                 })
             }
         })
@@ -244,8 +244,8 @@ class WebScraping {
                     content: $(item).find(".featured-story__title-link").text(),
                     link: "https://gestion.pe" + $(item).find(".featured-story__img-link").attr("href"),
                     img: $(item).find("a picture source").attr("data-srcset"),
-                    source:"gestion-politica",
-                    source_title:"Gestion politica"
+                    source: "gestion-politica",
+                    source_title: "Gestion politica"
                 })
             }
         })
@@ -269,10 +269,10 @@ class WebScraping {
 
                 this.writeDB({
                     content: $(item).find("a span").text(),
-                    link: "https://www.bbc.com/mundo" + $(item).find("a").attr("href"),
+                    link: "https://www.bbc.com/" + $(item).find("a").attr("href"),
                     img: $(item).find("picture img").attr("src"),
-                    source:"bbc-mundo",
-                    source_title:"BBC mundo"
+                    source: "bbc-mundo",
+                    source_title: "BBC mundo"
                 })
             }
         })
@@ -285,9 +285,9 @@ class WebScraping {
         return cheerio.load(webPage)
     }
 
-    async writeDB(data,from) {
+    async writeDB(data, from) {
 
-        let obj = {...data, id: crypto.randomUUID(), created_date: new Date().toJSON()}
+        let obj = {...data, id: crypto.randomUUID(), created_date: new Date().toJSON(), favorite: false}
         console.log(obj)
         await this.dyn.put({
             TableName: "news",

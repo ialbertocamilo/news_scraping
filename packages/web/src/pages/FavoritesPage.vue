@@ -7,8 +7,7 @@
     :subtitle="item.source_title"
     :text="item.content"
     :img="item.img"
-    :link="item.link"
-    :obj="item"
+    @click="goToPage(item.link)"
   />
 
 </template>
@@ -16,6 +15,7 @@
 
 <script setup>
 
+console.log("favorites")
 
 import CardNews from "components/CardNews.vue";
 import {api} from "boot/axios";
@@ -23,13 +23,14 @@ import {ref} from "vue";
 
 
 const items = ref([])
-api.get("/rest/news/get").then(({data}) => {
+api.get("/rest/news/favorites/get").then(({data}) => {
   if (data)
     items.value = data.Items
 
 })
 
 function goToPage(url){
+  console.log(url)
   window.open(url,"_blank")
 }
 </script>

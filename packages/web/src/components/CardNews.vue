@@ -1,14 +1,14 @@
 <template>
   <q-card class="q-pa-md q-ma-md  items-start">
     <q-card-section horizontal>
-      <q-card-section class="q-ma-none q-pa-xs full-width">
+      <q-card-section class="q-ma-none q-pa-xs full-width" @click="goToPage(prop.link)">
         <q-card-section v-if="prop.img" class="col-5 flex flex-center q-ma-none q-px-none full-width">
           <!--          <q-img-->
           <!--            class="rounded-borders"-->
           <!--            :src="prop.img"-->
           <!--          />-->
 
-          <picture >
+          <picture>
             <source :srcset="prop.img" media="(min-width:100px)" type="image/webp"
                     sizes="(max-width: 1008px) 33vw, 321px">
             <q-img
@@ -25,13 +25,17 @@
           {{ prop.subtitle }}
         </q-card-section>
         {{ prop.text }}
+        <q-card-section class="q-ma-none q-pa-none text-subtitle2 text-caption text-grey-10 q-pa-none q-ma-none">
+          - {{ new Date(prop.obj.created_date).toLocaleDateString() }}
+        </q-card-section>
       </q-card-section>
+
       <q-separator vertical/>
 
-      <q-card-actions vertical class="justify-center">
-        <q-btn flat round color="red" icon="favorite"/>
+      <q-card-actions vertical class="justify-center items-center text-center">
+        <q-btn flat round color="red" icon="favorite" @click="addToFavorites"/>
+        <q-btn flat round color="grey" icon="favorite"/>
         <q-btn flat round color="accent" icon="bookmark"/>
-        <q-btn flat round color="primary" icon="share"/>
       </q-card-actions>
     </q-card-section>
   </q-card>
@@ -39,10 +43,26 @@
 
 <script setup>
 
+import {api} from "boot/axios";
+
 const prop = defineProps({
   title: String,
   subtitle: String,
   text: String,
-  img: String
+  img: String,
+  link: String,
+  obj: Object
 })
+
+
+function addToFavorites() {
+  console.log(prop.obj)
+  api.post("/rest/news/favorites/add", {...prop.obj, date: new Date().toJSON()}).then(data => {
+    console.log(data)
+  })
+}
+
+function goToPage(url) {
+  window.open(url, "_blank")
+}
 </script>
