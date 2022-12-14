@@ -12,9 +12,9 @@ export class NewsController {
 
     @Get("/get")
     async getAll(@QueryParams("source_filter") source_filter: string): Promise<PromiseResult<any, any>> {
-        let d=new Date()
-        let date1=d.getFullYear()+"-"+(d.getMonth()+1)+"-"+(d.getDate())+'T00:00:00.000Z'
-        let date2=d.getFullYear()+"-"+(d.getMonth()+1)+"-"+(d.getDate())+'T24:59:00.000Z'
+        const d = new Date()
+        const date1 = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + (d.getDate()) + 'T00:00:00.000Z'
+        const date2 = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + (d.getDate()) + 'T24:59:00.000Z'
         if (source_filter) {
             return await this.dynamo.getInstance().scan({
                 TableName: 'news',
@@ -55,26 +55,23 @@ export class NewsController {
 
     @Get("/favorites/get")
     async getFavorites() {
-        let data = await this.dynamo.getInstance().scan({
+        return await this.dynamo.getInstance().scan({
             TableName: 'news',
             FilterExpression: "favorite = :favorite",
             ExpressionAttributeValues: {
                 ":favorite": true
             }
         }).promise()
-
-        return data
     }
 
 
     @Delete("/delete")
     async deleteAllItems() {
 
-        let st = "delete from news where 'favorite'='false' RETURNING ALL OLD *";
-        let data = await this.dynamo.getDynamo().executeStatement({
+        const st = "delete from news where 'favorite'='false' RETURNING ALL OLD *";
+        await this.dynamo.getDynamo().executeStatement({
             Statement: st
-        }).promise()
-
+        }).promise();
         return st;
     }
 }

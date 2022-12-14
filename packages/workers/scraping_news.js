@@ -41,13 +41,13 @@ class WebScraping {
         });
         let pg = await this.browser.newPage();
 
-        let waitUntil = ["load", "domcontentloaded",'networkidle0', "networkidle2"]
+        let waitUntil = ["load", "domcontentloaded", 'networkidle0', "networkidle2"]
         if (!networkidle2) {
             waitUntil = ["load", "domcontentloaded"]
         }
         await pg.goto(url, {
             waitUntil,
-            timeout:0
+            timeout: 0
         });
         this.page = pg
     }
@@ -282,7 +282,7 @@ class WebScraping {
 
                 this.writeDB({
                     content: $(item).find("a span").text(),
-                    link: String($(item).find("a").attr("href")).includes("youtube.com")?$(item).find("a").attr("href"):"https://www.bbc.com" + $(item).find("a").attr("href"),
+                    link: String($(item).find("a").attr("href")).includes("youtube.com") ? $(item).find("a").attr("href") : "https://www.bbc.com" + $(item).find("a").attr("href"),
                     img: $(item).find("picture img").attr("src"),
                     source: "bbc-mundo",
                     source_id: 10,
@@ -313,7 +313,7 @@ class WebScraping {
 
     async getAllEls() {
 
-        console.log(await this.dyn.scan({TableName: 'news'}).promise())
+        return await this.dyn.scan({TableName: 'news'}).promise()
     }
 
     async close() {
@@ -344,22 +344,30 @@ class DynamoDb {
 
 }
 
+function writeLog(name,data) {
+
+    writeFile(name, data, (err) => {
+        if (err) console.log(err)
+    })
+}
+
 (async () => {
 
         let scrap = new WebScraping()
 
         Promise.all([
-            scrap.scrapElPeruano(),
-            scrap.scrapRepublica(),
-            scrap.scrapLaRepublicaPolitica(),
-            scrap.scrapElComercio(),
-            scrap.scrapElComercioPolitica(),
-            scrap.scrapGestion(),
-            scrap.scrapGestionPolitica(),
-            scrap.scrapBBC()
+                scrap.scrapElPeruano(),
+                scrap.scrapRepublica(),
+                scrap.scrapLaRepublicaPolitica(),
+                scrap.scrapElComercio(),
+                scrap.scrapElComercioPolitica(),
+                scrap.scrapGestion(),
+                scrap.scrapGestionPolitica(),
+                scrap.scrapBBC()
             ]
         ).then(async (data) => {
-            await scrap.getAllEls()
+            let elements=await scrap.getAllEls()
+            writeLog("log-"+new Date().toTimeString()+".txt",JSON.stringify(elements))
             await scrap.close()
             process.exit()
         })

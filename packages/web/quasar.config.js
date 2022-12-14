@@ -70,7 +70,7 @@ module.exports = configure(function (ctx) {
       // publicPath: '/',
       // analyze: true,
       env: {
-        API: ctx.dev ? 'http://localhost:8083' : 'http://awsproduction'
+        API: ctx.dev ? 'http://ec2-44-203-98-45.compute-1.amazonaws.com:8083/' : 'http://ec2-44-203-98-45.compute-1.amazonaws.com:8083/'
       },
       // rawDefine: {}
       // ignorePublicFolder: true,
