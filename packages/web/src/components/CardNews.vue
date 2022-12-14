@@ -1,7 +1,7 @@
 <template>
   <q-card class="q-pa-md q-ma-md  items-start">
     <q-card-section horizontal>
-      <q-card-section class="q-ma-none q-pa-xs full-width" @click="goToPage(prop.link)">
+      <q-card-section class="q-ma-none q-pa-xs full-width cursor-pointer" @click="goToPage(prop.link)">
         <q-card-section v-if="prop.img" class="col-5 flex flex-center q-ma-none q-px-none full-width">
           <!--          <q-img-->
           <!--            class="rounded-borders"-->
@@ -26,16 +26,14 @@
         </q-card-section>
         {{ prop.text }}
         <q-card-section class="q-ma-none q-pa-none text-subtitle2 text-caption text-grey-10 q-pa-none q-ma-none">
-          - {{ new Date(prop.obj.created_date).toLocaleDateString() }}
+          - {{ moment(prop.obj.created_date).calendar() }}
         </q-card-section>
       </q-card-section>
 
       <q-separator vertical/>
 
       <q-card-actions vertical class="justify-center items-center text-center">
-        <q-btn flat round color="red" icon="favorite" @click="addToFavorites"/>
-        <q-btn flat round color="grey" icon="favorite"/>
-        <q-btn flat round color="accent" icon="bookmark"/>
+        <q-btn flat round :color="prop.obj.favorite?'red':'grey'" icon="favorite" @click="addToFavorites"/>
       </q-card-actions>
     </q-card-section>
   </q-card>
@@ -44,6 +42,7 @@
 <script setup>
 
 import {api} from "boot/axios";
+import moment from "moment"
 
 const prop = defineProps({
   title: String,
@@ -54,11 +53,12 @@ const prop = defineProps({
   obj: Object
 })
 
+const emit=defineEmits(['reload'])
+
 
 function addToFavorites() {
-  console.log(prop.obj)
-  api.post("/rest/news/favorites/add", {...prop.obj, date: new Date().toJSON()}).then(data => {
-    console.log(data)
+  api.post("/rest/news/favorites/add", {...prop.obj}).then(data => {
+    emit('reload')
   })
 }
 

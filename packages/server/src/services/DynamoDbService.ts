@@ -6,6 +6,7 @@ import AWS from "aws-sdk";
 export class DynamoDbService {
 
     protected instance;
+    protected dynamo;
 
     constructor() {
         $log.info("Loading dynamodb")
@@ -16,10 +17,15 @@ export class DynamoDbService {
         })
         $log.info("AWS info Loaded")
         this.instance = new AWS.DynamoDB.DocumentClient()
+        this.dynamo = new AWS.DynamoDB()
     }
 
     public getInstance() {
         return this.instance;
+    }
+
+    public getDynamo() {
+        return this.dynamo;
     }
 
 }

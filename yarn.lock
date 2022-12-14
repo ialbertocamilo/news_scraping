@@ -3674,9 +3674,9 @@
   dependencies:
     "is-arrayish" "^0.2.1"
 
-"esbuild-darwin-64@0.14.51":
-  "integrity" "sha512-YFmXPIOvuagDcwCejMRtCDjgPfnDu+bNeh5FU2Ryi68ADDVlWEpbtpAbrtf/lvFTWPexbgyKgzppNgsmLPr8PA=="
-  "resolved" "https://registry.npmjs.org/esbuild-darwin-64/-/esbuild-darwin-64-0.14.51.tgz"
+"esbuild-windows-64@0.14.51":
+  "integrity" "sha512-HoN/5HGRXJpWODprGCgKbdMvrC3A2gqvzewu2eECRw2sYxOUoh2TV1tS+G7bHNapPGI79woQJGV6pFH7GH7qnA=="
+  "resolved" "https://registry.npmjs.org/esbuild-windows-64/-/esbuild-windows-64-0.14.51.tgz"
   "version" "0.14.51"
 
 "esbuild@^0.14.27", "esbuild@0.14.51":
@@ -4266,11 +4266,6 @@
   "integrity" "sha512-OO0pH2lK6a0hZnAdau5ItzHPI6pUlvI7jMVnxUQRtw4owF2wk8lOSabtGDCTP4Ggrg2MbGnWO9X8K1t4+fGMDw=="
   "resolved" "https://registry.npmjs.org/fs.realpath/-/fs.realpath-1.0.0.tgz"
   "version" "1.0.0"
-
-"fsevents@~2.3.2":
-  "integrity" "sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA=="
-  "resolved" "https://registry.npmjs.org/fsevents/-/fsevents-2.3.2.tgz"
-  "version" "2.3.2"
 
 "function-bind@^1.1.1":
   "integrity" "sha512-yIovAzMX49sF8Yl58fSCWJ5svSLuaibPxXQJFLmBObTuCr0Mf1KiPopGM9NiFjiYBCbfaa2Fh6breQ6ANVTI0A=="
@@ -5853,6 +5848,11 @@
   "resolved" "https://registry.npmjs.org/module-alias/-/module-alias-2.2.2.tgz"
   "version" "2.2.2"
 
+"moment@^2.29.4":
+  "integrity" "sha512-5LC9SOxjSc2HF6vO2CyuTDNivEdoz2IvyJJGj6X8DJ0eFyfszE0QiEd+iXmBvUP3WHxSjFH/vIsA0EN00cgr8w=="
+  "resolved" "https://registry.npmjs.org/moment/-/moment-2.29.4.tgz"
+  "version" "2.29.4"
+
 "ms@^2.0.0", "ms@2.1.2":
   "integrity" "sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w=="
   "resolved" "https://registry.npmjs.org/ms/-/ms-2.1.2.tgz"
@@ -7423,7 +7423,7 @@
     "parseurl" "~1.3.3"
     "send" "0.18.0"
 
-"server@file:/Users/camilo/Projects/news_scraping/packages/server":
+"server@file:C:\\Users\\Camilo\\Desktop\\Proyectos CAMILO\\news_scraping\\packages\\server":
   "resolved" "file:packages/server"
   "version" "1.0.0"
   dependencies:
@@ -8434,7 +8434,7 @@
   dependencies:
     "defaults" "^1.0.3"
 
-"web@file:/Users/camilo/Projects/news_scraping/packages/web":
+"web@file:C:\\Users\\Camilo\\Desktop\\Proyectos CAMILO\\news_scraping\\packages\\web":
   "resolved" "file:packages/web"
   "version" "0.0.1"
   dependencies:
@@ -8514,11 +8514,12 @@
   "resolved" "https://registry.npmjs.org/wordwrap/-/wordwrap-1.0.0.tgz"
   "version" "1.0.0"
 
-"workers@file:/Users/camilo/Projects/news_scraping/packages/workers":
+"workers@file:C:\\Users\\Camilo\\Desktop\\Proyectos CAMILO\\news_scraping\\packages\\workers":
   "resolved" "file:packages/workers"
   "version" "1.0.0"
   dependencies:
     "cheerio" "^1.0.0-rc.12"
+    "crypto" "^1.0.1"
     "htmlparser2" "^8.0.1"
     "puppeteer" "^19.3.0"
 

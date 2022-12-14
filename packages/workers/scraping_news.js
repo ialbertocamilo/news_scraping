@@ -3,6 +3,7 @@ import {writeFile} from "fs";
 import cheerio from "cheerio"
 import {$log} from "@tsed/common";
 import AWS from "aws-sdk";
+import {randomUUID} from "node:crypto"
 
 
 function savePage(name, data) {
@@ -40,12 +41,13 @@ class WebScraping {
         });
         let pg = await this.browser.newPage();
 
-        let waitUntil = ["load", "domcontentloaded", "networkidle2"]
+        let waitUntil = ["load", "domcontentloaded",'networkidle0', "networkidle2"]
         if (!networkidle2) {
             waitUntil = ["load", "domcontentloaded"]
         }
         await pg.goto(url, {
-            waitUntil: waitUntil, timeout: 0
+            waitUntil,
+            timeout:0
         });
         this.page = pg
     }
@@ -62,12 +64,15 @@ class WebScraping {
         $("article").each((i, item) => {
             let subEl = cheerio.load($(item).html())
             if (subEl(".bajada").text() !== "") {
+                // let element=
+                // elements.push(element)
                 this.writeDB({
                     title: subEl(".titular").text(),
                     content: subEl(".bajada").text(),
                     img: subEl(".fotonoticia").find("a img").attr("src"),
                     link: "https://www.elperuano.pe/" + subEl(item).find(".card-title2 a").attr("href"),
-                    source: "peruano-politiica",
+                    source: "peruano-politica",
+                    source_id: 1,
                     source_title: "El Peruano Politica"
                 })
             }
@@ -94,6 +99,7 @@ class WebScraping {
                     link: $(item).find("a").attr("href"),
                     img: $(item).find("img").attr("src"),
                     source: "republica-mundo",
+                    source_id: 2,
                     source_title: "La Republica Mundo"
                 })
             }
@@ -105,6 +111,7 @@ class WebScraping {
                     link: $(item).find("a").attr("href"),
                     img: $(item).find("img").attr("srcset"),
                     source: "republica-mundo",
+                    source_id: 3,
                     source_title: "La Republica Mundo"
                 })
             }
@@ -133,6 +140,7 @@ class WebScraping {
                     link: $(item).find("a").attr("href"),
                     img: $(item).find("img").attr("src"),
                     source: "republica-politica",
+                    source_id: 4,
                     source_title: "La Republica Politica"
                 })
             }
@@ -144,6 +152,7 @@ class WebScraping {
                     link: $(item).find("a").attr("href"),
                     img: $(item).find("img").attr("srcset"),
                     source: "republica-politica",
+                    source_id: 5,
                     source_title: "La Republica Politica"
                 })
             }
@@ -170,6 +179,7 @@ class WebScraping {
                 link: "https://www.elcomercio.pe" + $(item).find(".fs-wi__title a").attr("href"),
                 img: $(item).find("img").attr("src"),
                 source: "comercio-mundo",
+                source_id: 6,
                 source_title: "El Comercio Mundo"
             })
         })
@@ -195,6 +205,7 @@ class WebScraping {
                 link: "https://www.elcomercio.pe" + $(item).find(".fs-wi__title a").attr("href"),
                 img: $(item).find("img").attr("src"),
                 source: "comercio-politica",
+                source_id: 7,
                 source_title: "El Comercio Politica"
             })
         })
@@ -219,6 +230,7 @@ class WebScraping {
                     link: "https://gestion.pe" + $(item).find(".featured-story__img-link").attr("href"),
                     img: $(item).find("a picture source").attr("data-srcset"),
                     source: "gestion-internacional",
+                    source_id: 8,
                     source_title: "Gestion internacional"
                 })
             }
@@ -245,6 +257,7 @@ class WebScraping {
                     link: "https://gestion.pe" + $(item).find(".featured-story__img-link").attr("href"),
                     img: $(item).find("a picture source").attr("data-srcset"),
                     source: "gestion-politica",
+                    source_id: 9,
                     source_title: "Gestion politica"
                 })
             }
@@ -269,9 +282,10 @@ class WebScraping {
 
                 this.writeDB({
                     content: $(item).find("a span").text(),
-                    link: "https://www.bbc.com/" + $(item).find("a").attr("href"),
+                    link: String($(item).find("a").attr("href")).includes("youtube.com")?$(item).find("a").attr("href"):"https://www.bbc.com" + $(item).find("a").attr("href"),
                     img: $(item).find("picture img").attr("src"),
                     source: "bbc-mundo",
+                    source_id: 10,
                     source_title: "BBC mundo"
                 })
             }
@@ -285,14 +299,13 @@ class WebScraping {
         return cheerio.load(webPage)
     }
 
-    async writeDB(data, from) {
+    async writeDB(data) {
 
-        let obj = {...data, id: crypto.randomUUID(), created_date: new Date().toJSON(), favorite: false}
-        console.log(obj)
+        let obj = {...data, id: randomUUID(), created_date: new Date().toJSON(), favorite: false}
+        // console.log(obj)
         await this.dyn.put({
             TableName: "news",
             Item: obj
-
         }).promise()
 
 
@@ -335,16 +348,19 @@ class DynamoDb {
 
         let scrap = new WebScraping()
 
-        Promise.all([scrap.scrapElPeruano(),
+        Promise.all([
+            scrap.scrapElPeruano(),
             scrap.scrapRepublica(),
             scrap.scrapLaRepublicaPolitica(),
             scrap.scrapElComercio(),
             scrap.scrapElComercioPolitica(),
             scrap.scrapGestion(),
             scrap.scrapGestionPolitica(),
-            scrap.scrapBBC()]).then(async (data) => {
+            scrap.scrapBBC()
+            ]
+        ).then(async (data) => {
             await scrap.getAllEls()
-            scrap.close()
+            await scrap.close()
             process.exit()
         })
     }

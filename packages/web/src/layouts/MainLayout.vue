@@ -43,7 +43,11 @@
         <router-view />
       </q-page>
       <q-page-sticky position="bottom-right" :offset="[18, 18]">
-        <q-btn fab icon="add" color="accent" />
+        <q-fab icon="add" color="accent"  direction="left">
+
+          <q-fab-action color="amber" text-color="white" to="/favs" icon="favorite" />
+
+        </q-fab>
       </q-page-sticky>
     </q-page-container>
   </q-layout>
@@ -58,19 +62,13 @@ const linksList = [
     title: 'Inicio',
     caption: 'Noticias principales',
     icon: 'home',
-    link: '/'
+    link: '/home'
   },
   {
     title: 'Favoritos',
     caption: 'lista de favoritos',
     icon: 'favorite',
-    link: '/favorites'
-  },
-  {
-    title: 'Secciones',
-    caption: 'Fuentes',
-    icon: 'chat',
-    link: 'https://chat.quasar.dev'
+    link: '/favs'
   },
 ]
 

@@ -13,7 +13,7 @@ export class HelloWorldController {
         return "heldflo";
     }
 
-    @Get("/teste")
+    @Get("/test")
     test() {
         this.dynamo.getInstance().scan({TableName: 'users'}, (err, data) => {
             console.log(data.Items)
