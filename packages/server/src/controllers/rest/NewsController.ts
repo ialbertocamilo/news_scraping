@@ -15,6 +15,7 @@ export class NewsController {
         const d = new Date()
         const date1 = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + (d.getDate()) + 'T00:00:00.000Z'
         const date2 = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + (d.getDate()) + 'T24:59:00.000Z'
+
         if (source_filter) {
             return await this.dynamo.getInstance().scan({
                 TableName: 'news',
@@ -29,7 +30,14 @@ export class NewsController {
                 }
             }).promise();
         }
-        const data = await this.dynamo.getInstance().scan({TableName: 'news'}).promise();
+        const data = await this.dynamo.getInstance().scan({
+            TableName: 'news',
+            FilterExpression: "created_date between :created_date1 and :created_date2",
+            ExpressionAttributeValues: {
+                ":created_date1": date1,
+                ":created_date2": date2,
+            },
+        }).promise();
 
         return data
     }
